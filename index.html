@@ -14,7 +14,8 @@
                 font-family: 'Roboto', sans-serif;
             }
             #reader {
-                width: 600px;
+                width: 100%;
+                max-width: 600px;
                 margin: 20px auto;
             }
             #result {
@@ -22,7 +23,22 @@
                 padding: 20px;
                 border-radius: 6px;
                 max-width: 600px;
+                width: 90%;
                 box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+            }
+            @media screen and (max-width: 768px) {
+                #reader {
+                    width: 90%;
+                }
+                .title.is-3 {
+                    font-size: 1.5rem;
+                }
+                .title.is-4 {
+                    font-size: 1.25rem;
+                }
+                .title.is-5 {
+                    font-size: 1rem;
+                }
             }
         </style>
     
@@ -50,9 +66,19 @@
                     </ul>
                 `;            }
     
+            function getQRBoxSize() {
+                return window.innerWidth < 768 ? 200 : 250;
+            }
+
             const html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader", { fps: 10, qrbox: 250 });
+
+                "reader", { fps: 10, qrbox: getQRBoxSize() });
             html5QrcodeScanner.render(onScanSuccess);
+
+            window.addEventListener('resize', () => {
+                html5QrcodeScanner.clear();
+                html5QrcodeScanner.render(onScanSuccess);
+            });
         </script>
     
 </body>
