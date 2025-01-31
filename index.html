@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <script src="https://unpkg.com/html5-qrcode"></script>
+        <style>
+            body {
+                font-family: 'Roboto', sans-serif;
+            }
+            #reader {
+                width: 600px;
+                margin: 20px auto;
+            }
+            #result {
+                margin: 20px auto;
+                padding: 20px;
+                border-radius: 6px;
+                max-width: 600px;
+                box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,.1), 0 0 0 1px rgba(10,10,10,.02);
+            }
+        </style>
+    
+        <section class="section">
+            <div class="container">
+                <h1 class="title is-3 has-text-centered">Scanner QR Code</h1>
+                <div id="reader" class="box"></div>
+                <div id="result" class="content"></div>
+            </div>
+        </section>
+    
+        <script>
+            function onScanSuccess(decodedText, decodedResult) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = `
+                    <h3 class="title is-4">It works!</h3>
+                    <p class="subtitle is-5">QR Code content: ${decodedText}</p>
+                    <h4 class="title is-5">Device characteristics:</h4>
+                    <ul>
+                        <li><strong>Browser:</strong> ${navigator.userAgent}</li>
+                        <li><strong>Platform:</strong> ${navigator.platform}</li>
+                        <li><strong>Language:</strong> ${navigator.language}</li>
+                        <li><strong>Online connection:</strong> ${navigator.onLine ? 'Yes' : 'No'}</li>
+                        <li><strong>Screen resolution:</strong> ${window.screen.width}x${window.screen.height}</li>
+                    </ul>
+                `;            }
+    
+            const html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 250 });
+            html5QrcodeScanner.render(onScanSuccess);
+        </script>
+    
+</body>
+</html>
